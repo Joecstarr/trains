@@ -1,13 +1,13 @@
 name: Build Linux
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    push:
+        tags:
+        - '*'
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    # Allows you to run this workflow manually from the Actions tab
+    workflow_dispatch:
+
 
 
 
@@ -28,6 +28,15 @@ jobs:
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build
 
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: build/trains_program
+        asset_name: trains_program_linux
+        tag: ${{ github.ref }}
+        overwrite: true
+        body: "This is a release for the linux executable"
 
     - name: 'Upload Artifact'
       if: always()
