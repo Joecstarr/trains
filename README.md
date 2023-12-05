@@ -1,6 +1,6 @@
 # Download and run
 
-This repo builds the program from the forked repo in github actions. The most recent builds can be found [here](https://github.com/Joecstarr/trains/tags). Download the artifact for the version you need (bottom of the action page). Unzip the zip file on your system. Open a command line and navigate to the directory you just unzipped. Run the following in that directory
+This repo builds the program from the forked repo in github actions. The most recent builds can be found [here](https://github.com/Joecstarr/trains/tags). Download the artifact for the version you need (bottom of the action page). Open a command line and navigate to the directory with the executable. Run the following in that directory
 
 ## Windows
 
