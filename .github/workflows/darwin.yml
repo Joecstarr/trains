@@ -41,8 +41,6 @@ jobs:
         file: build/trains_program
         asset_name: trains_program_osx
         tag: ${{ github.ref }}
-        overwrite: true
-        body: "This is a release for the mac executable"
 
     - name: 'Upload Artifact'
       if: always()

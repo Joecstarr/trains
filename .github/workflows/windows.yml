@@ -34,8 +34,6 @@ jobs:
         file: build/Debug/trains_program.exe
         asset_name: trains_program_windows.exe
         tag: ${{ github.ref }}
-        overwrite: true
-        body: "This is a release for the windows executable"
 
     - name: 'Upload Artifact'
       if: always()
