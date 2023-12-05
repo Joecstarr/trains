@@ -36,7 +36,5 @@ jobs:
       with:
           name: osx_artifacts
           path: |
-            build/**/*.exe
-            build/**/*.a
-            build/**/*.lib
+            build/**/*.*
 

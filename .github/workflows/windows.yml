@@ -33,9 +33,7 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v3
       with:
-          name: linux_artifacts
+          name: windows_artifacts
           path: |
             build/**/*.exe
-            build/**/*.a
-            build/**/*.lib
 
