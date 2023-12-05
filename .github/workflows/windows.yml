@@ -35,5 +35,5 @@ jobs:
       with:
           name: windows_artifacts
           path: |
-            build/**/frontend.exe
+            build/**/trains_program.exe
 
