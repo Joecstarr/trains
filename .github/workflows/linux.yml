@@ -14,7 +14,7 @@ on:
 jobs:
   build_linux:
     env:
-        BUILD_TYPE: Debug
+        BUILD_TYPE: Release
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
