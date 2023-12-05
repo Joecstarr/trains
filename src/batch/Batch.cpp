@@ -11,9 +11,9 @@
 #include <vector>
 #include <algorithm>
 #include <cctype>
-#include "trains/Batch.h"
-#include "trains/braid.h"
-#include "trains/graph.h"
+#include "Batch.h"
+#include "braid.h"
+#include "graph.h"
 
 namespace trains {
 
@@ -49,7 +49,7 @@ ofstream oFile;
 #else
 #define THRO(T,N) {{RemoteGraph.Messages.push_back(T);   \
 	if (!ConOutput) oFile.close();                                        \
-	return false;   }}                            
+	return false;   }}
 #endif
 #else
 #define THRO(T,N) {{    \
@@ -134,7 +134,7 @@ bool BatchProcess(char* Filename, int Prec
 	ifstream iFile;
 	iFile.open(Filename);
 	if (!iFile) THRO("Cannot find batch file", 5);
-	bool result = BatchProcess(iFile, Prec  
+	bool result = BatchProcess(iFile, Prec
 #ifdef VS2005
 		, RemoteGraph
 #endif
@@ -330,8 +330,8 @@ bool BatchProcess(istream& iFile, int Prec
 				}
 				if (!H.FindPermutation()) THRO("Illegal horseshoe orbit code",5);
 				HSstring = In[1];
-				B.Set(H); 
-				if (boundaryPeripheral) 
+				B.Set(H);
+				if (boundaryPeripheral)
 					G.BoundaryPeripheralSet(B);
 				else G.Set(B);
 				gr = G.FindTrainTrack();
@@ -427,13 +427,13 @@ bool BatchProcess(istream& iFile, int Prec
 					do
 					{
 						HSstring.clear();
-						for (uint k=1; k<=period; ++k) 
+						for (uint k=1; k<=period; ++k)
 						{
 							H.L[1].s[k] = (rand()%2==0) ? 0 : 1;
 							HSstring += (H.L[1].s[k]==0) ? "0" : "1";
 						}
 					} while (!H.FindPermutation());
-					B.Set(H); 
+					B.Set(H);
 					if (boundaryPeripheral) G.BoundaryPeripheralSet(B);
 					else G.Set(B);
 					gr = G.FindTrainTrack();

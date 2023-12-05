@@ -3,7 +3,7 @@
 
 #endif
 
-#include "trains/embedding.h"
+#include "embedding.h"
 #include <iterator>
 #include <algorithm>
 

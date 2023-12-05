@@ -6,7 +6,7 @@
 
 #endif
 
-#include "trains/graph.h"
+#include "graph.h"
 
 namespace trains {
 
@@ -20,26 +20,26 @@ turnlist::~turnlist() {if (next) next->turnlist::~turnlist(); delete [] p;}
 long turnlist::TopIndex() {return MaxAssigned+long(origin);}
 
 turn& turnlist::operator [](uint i)
-{                                                                                    
+{
 	return Element(i-origin);
 }
 
-turn& turnlist::Element(uint i)                                                           
+turn& turnlist::Element(uint i)
 {
-	if (i > MAXARRAYLENGTH) THROW("Array Index Out of Bounds", 1); 
+	if (i > MAXARRAYLENGTH) THROW("Array Index Out of Bounds", 1);
 	if (long(i) >= MaxAssigned) MaxAssigned = long(i);
-	if (i<size) return p[i];                                                           
+	if (i<size) return p[i];
 	if (next) return next->Element(i-size);
-	uint growby = (delta > i-size+1) ? delta : i-size+1;                                 
+	uint growby = (delta > i-size+1) ? delta : i-size+1;
 	next = new turnlist(growby, delta);
 	if (!next) THROW("Out of Memory", 1);
 	return next->Element(i-size);
 }
 
 uint turnlist::GetSize()
-{                                                   
+{
 	if (!next) return size;
-	return size + next->GetSize();                      
+	return size + next->GetSize();
 }
 
 void turnlist::Flush()
@@ -51,100 +51,100 @@ void turnlist::Flush()
 	}
 	next = NULL;
 	MaxAssigned = -1;
-}                                                                  
+}
 
 turnlist::turnlist(turnlist& A) : p(new turn[A.GetSize()]),
 next (NULL), size(A.GetSize()), delta(A.delta), origin(A.origin), MaxAssigned(A.MaxAssigned)
 {
-	for (uint i=0; long(i)<=A.MaxAssigned; i++) Element(i)=A.Element(i);               
-}                                                   
+	for (uint i=0; long(i)<=A.MaxAssigned; i++) Element(i)=A.Element(i);
+}
 
-turnlist& turnlist::operator=(turnlist& A)                        
-{                                                      
+turnlist& turnlist::operator=(turnlist& A)
+{
 	if (this == &A) return *this;
-	Flush();                                              
+	Flush();
 	MaxAssigned = -1;
 	for (int i=0; i<=A.MaxAssigned; i++) Element(i) = A.Element(i);
-	return *this;                                                     
+	return *this;
 }
 
 
-long turnlist::Find(turn& Value)                                               
+long turnlist::Find(turn& Value)
 {
-	for (int i=0; i<=MaxAssigned; i++) if (Element(i) == Value) return (i+origin);  
-	return -1;                                                                       
+	for (int i=0; i<=MaxAssigned; i++) if (Element(i) == Value) return (i+origin);
+	return -1;
 }
 
-void turnlist::_Remove(uint i, uint d)                                                     
+void turnlist::_Remove(uint i, uint d)
 {
-	if (long(i+d) > MaxAssigned) THROW("Trying to remove non-existent elements",1);             
+	if (long(i+d) > MaxAssigned) THROW("Trying to remove non-existent elements",1);
 	for (uint j=i+d+1; long(j)<=MaxAssigned; j++) Element(j-d-1)=Element(j);
 	MaxAssigned -= (d+1);
-}                                                                                           
+}
 
 void turnlist::Remove(uint i, uint d)
 {
-	_Remove(i-origin, d);                           
+	_Remove(i-origin, d);
 }
 
-void turnlist::Append(turnlist& A)                            
+void turnlist::Append(turnlist& A)
 {
-	for (uint i=0; long(i)<=A.MaxAssigned; i++)                
-		if (MaxAssigned == -1) Element(0) = A.Element(i);  
+	for (uint i=0; long(i)<=A.MaxAssigned; i++)
+		if (MaxAssigned == -1) Element(0) = A.Element(i);
 		else Element(uint(MaxAssigned+1)) = A.Element(i);
-}                                                          
+}
 
 void turnlist::Prepend(turnlist& A)
-{                                                             
-	long j = A.MaxAssigned; 
+{
+	long j = A.MaxAssigned;
 	if (j==-1) return;
 	for (long i=MaxAssigned; i>=0; i--)
-		Element(uint(i+j+1)) = Element(uint(i));  
+		Element(uint(i+j+1)) = Element(uint(i));
 	for (long i=0; i<=j; i++) Element(uint(i)) = A.Element(uint(i));
-}                                                                 
+}
 
 
-void turnlist::_Split(uint i, turnlist& A)                                                         
-{                                                                                           
+void turnlist::_Split(uint i, turnlist& A)
+{
 	if (long(i)>MaxAssigned) THROW("Trying to split after end of array",1);
 	A.Flush();
-	uint k=0;                                 
+	uint k=0;
 	for (uint j=i+1; long(j)<=MaxAssigned; j++) A.Element(k++) = Element(j);
-	MaxAssigned = long(i);                                                    
+	MaxAssigned = long(i);
 }
 
 
-void turnlist::Split(uint i, turnlist& A)                                         
+void turnlist::Split(uint i, turnlist& A)
 {
-	_Split(i-origin, A);                                                     
+	_Split(i-origin, A);
 }
 
-void turnlist::Print(::std::ostream& Out)                                                 
-{                                                                               
+void turnlist::Print(::std::ostream& Out)
+{
 	for (uint i=0; long(i)<=MaxAssigned; i++) Out << Element(i) << " ";
 	Out << '\n';
-}   
+}
 
 
 
 void turnlist::Rotate(long Angle)
 {
-	if (MaxAssigned <= 0) return;                     
-	turnlist Temp = *this;                                   
+	if (MaxAssigned <= 0) return;
+	turnlist Temp = *this;
 	long Modulus = MaxAssigned+1;
 	for (long i=0; i<=MaxAssigned; i++)
-	{                                                       
+	{
 		long j= (i+Angle) % Modulus;
-		if (j<0) j+=Modulus;                                   
-		Element(uint(i))=Temp.Element(uint(j));                 
+		if (j<0) j+=Modulus;
+		Element(uint(i))=Temp.Element(uint(j));
 	}
-}  
+}
 
 
 
 void turnlist::Insert(uint i, turn& Value)
-{                                              
-	for (uint j = TopIndex()+1; j>i; j--) (*this)[j] = (*this)[j-1]; 
+{
+	for (uint j = TopIndex()+1; j>i; j--) (*this)[j] = (*this)[j-1];
 	(*this)[i] = Value;
 }
 
@@ -798,7 +798,7 @@ void graph::CarefulFoldAsMuchAsPossible(long Label1, long Label2)
 				while (Edges[FindEdge(CurrentEdge.Image[Guard-Place+1])].Type != Main)
 					Place++;
 			}
-			if (long(Place) >= Guard) 
+			if (long(Place) >= Guard)
 			{
 				OldMethodFailed = true;
 				break;

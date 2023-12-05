@@ -4,7 +4,7 @@
 #endif
 
 #include <string>
-#include "trains/hshoe.h"
+#include "hshoe.h"
 
 namespace trains {
 
@@ -132,9 +132,9 @@ void codelist::Rotate(long Angle)
 	codelist Temp = *this;
 	long Modulus = MaxAssigned+1;
 	for (long i=0; i<=MaxAssigned; i++)
-	{                                                       
+	{
 		long j= (i+Angle) % Modulus;
-		if (j<0) j+=Modulus;                                   
+		if (j<0) j+=Modulus;
 		Element(uint(i))=Temp.Element(uint(j));
 	}
 }
@@ -143,7 +143,7 @@ void codelist::Rotate(long Angle)
 
 void codelist::Insert(uint i, code& Value)
 {
-	for (uint j = TopIndex()+1; j>i; j--) (*this)[j] = (*this)[j-1]; 
+	for (uint j = TopIndex()+1; j>i; j--) (*this)[j] = (*this)[j-1];
 	(*this)[i] = Value;
 }
 
@@ -156,11 +156,11 @@ bool codelist::Agrees(uint i, codelist& A)
 }
 
 bool codelist::Add(code Value)
-{                                                                                 
+{
 	if (Find(Value) != -1) return false;
-	Element(uint(MaxAssigned+1)) = Value;                                                  
+	Element(uint(MaxAssigned+1)) = Value;
 	return true;
-}                                                                                     
+}
 
 void codelist::SureAdd(code Value)
 {
@@ -168,10 +168,10 @@ void codelist::SureAdd(code Value)
 }
 
 uint codelist::AgreesTo(codelist& A)
-{                                                         
+{
 	long Size = (MaxAssigned > A.MaxAssigned) ? A.MaxAssigned : MaxAssigned;
 	uint i; for (i=0; long(i)<=Size; i++) if (!(Element(i) == A.Element(i))) return i;
-	return i;                                                                  
+	return i;
 }
 
 

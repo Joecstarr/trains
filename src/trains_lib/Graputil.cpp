@@ -7,7 +7,7 @@
 
 #endif
 
-#include "trains/graph.h"
+#include "graph.h"
 #include <sstream>
 #include <map>
 
@@ -83,8 +83,8 @@ void graph::LoopReplace(long label, intarray& L)
 	for (vector<int>::size_type i=0; i < loops.size(); ++i)
 	{
 		loops[i].Replace(label, L);
-	}    
-}    
+	}
+}
 
 void graph::RemoveAll(long Label)
 {
@@ -100,8 +100,8 @@ void graph::LoopRemoveAll(long Label)
 	for (vector<int>::size_type i=0; i<loops.size(); ++i)
 	{
 		loops[i].RemoveAll(Label);
-	}    
-}    
+	}
+}
 
 bool graph::Tighten()
 {
@@ -133,7 +133,7 @@ std::vector<std::string> graph::TransitionMatrix(matrixformat format, bool inclu
 		std::vector<uint> longest(M.size(),1);
 		for (uint i=0; i<M.size(); ++i) for (uint j=0; j<M.size(); ++j)
 		{
-			ostringstream oss; 
+			ostringstream oss;
 			oss << M.element(i,j);
 			if (oss.str().length()>longest[j]) longest[j]=static_cast<uint>(oss.str().length());
 		}
@@ -150,7 +150,7 @@ std::vector<std::string> graph::TransitionMatrix(matrixformat format, bool inclu
 			}
 		}
 	}
-	if (format==maple) 
+	if (format==maple)
 	{
 		result.push_back(std::string("<"));
 		for (uint i=0; i<M.size(); ++i)
@@ -261,7 +261,7 @@ std::string graph::CharacteristicPolynomial(bool factorise, bool includeNonMain)
 		ostringstream out;
 		out << factors;
 		//Convert into friendly notation
-		istringstream in(out.str()); 
+		istringstream in(out.str());
 		ostringstream friendly;
 		bool readingpoly = true;
 		char ch;
@@ -276,15 +276,15 @@ std::string graph::CharacteristicPolynomial(bool factorise, bool includeNonMain)
 			{
 				friendly << '-';
 				in >> coefficient;
-				if (coefficient>0) 
+				if (coefficient>0)
 				{
 					if (coefficient>1 || power == 0) friendly << coefficient;
 					if (power==1) friendly << 'X';
 					if (power>1) friendly << "X^" << power;
 					first = false;
-				}    
+				}
 				++power;
-			}    
+			}
 			if ( (ch >= '0') && (ch <= '9') ) //positive coefficient. May be reading a polynomial, or the power
 			{
 				in.putback(ch);
@@ -298,14 +298,14 @@ std::string graph::CharacteristicPolynomial(bool factorise, bool includeNonMain)
 						if (power==1) friendly << 'X';
 						if (power>1) friendly << "X^" << power;
 						first = false;
-					}    
+					}
 					++power;
-				}    
+				}
 				else if (coefficient>1)
 				{
 					friendly << "^" << coefficient;
-				}    
-			}  
+				}
+			}
 			if (ch==']')
 			{
 				if (readingpoly) friendly << ')';
@@ -313,8 +313,8 @@ std::string graph::CharacteristicPolynomial(bool factorise, bool includeNonMain)
 				readingpoly = !readingpoly;
 				power = 0;
 				first = true;
-			}      
-		}    
+			}
+		}
 		string result = friendly.str();
 		if (result[result.length()-2]=='(')
 		{
@@ -323,7 +323,7 @@ std::string graph::CharacteristicPolynomial(bool factorise, bool includeNonMain)
 #else
 			result.erase(--result.end()); result.erase(--result.end());
 #endif
-		}    
+		}
 		return result;
 	}
 	else //return unfactored charpoly
@@ -339,20 +339,20 @@ std::string graph::CharacteristicPolynomial(bool factorise, bool includeNonMain)
 		while (in.good())
 		{
 			ch = static_cast<char>(in.get());
-			if (ch == '-') //negative coefficient. 
+			if (ch == '-') //negative coefficient.
 			{
 				friendly << '-';
 				in >> coefficient;
-				if (coefficient>0) 
+				if (coefficient>0)
 				{
 					if (coefficient>1 || power == 0) friendly << coefficient;
 					if (power==1) friendly << 'X';
 					if (power>1) friendly << "X^" << power;
 					first = false;
-				}    
+				}
 				++power;
-			} 
-			if ( (ch >= '0') && (ch <= '9') ) //positive coefficient. 
+			}
+			if ( (ch >= '0') && (ch <= '9') ) //positive coefficient.
 			{
 				in.putback(ch);
 				in >> coefficient;
@@ -363,14 +363,14 @@ std::string graph::CharacteristicPolynomial(bool factorise, bool includeNonMain)
 					if (power==1) friendly << 'X';
 					if (power>1) friendly << "X^" << power;
 					first = false;
-				}    
-				++power;   
-			}   
-		} 
-		return friendly.str();   
-	}        
-}   
-#endif 
+				}
+				++power;
+			}
+		}
+		return friendly.str();
+	}
+}
+#endif
 
 bool graph::IntersectsP(long Label)
 {
@@ -740,7 +740,7 @@ bool graph::Collapses(intarray& L)
 		j=1; while (IsPeripheral(Image[j])) j++;
 		for (uint k=1; k<=j; k++) M[M.TopIndex()+1] = Image[k];
 		M.Tighten();
-		if (!M.TopIndex()) return true; 
+		if (!M.TopIndex()) return true;
 		L = M;
 	}
 	return false;
@@ -852,7 +852,7 @@ void graph::FindSingularities()
 		uint Image = Vertices[FindVertex(P.first)].GetImage();
 		while (Image != Target)
 		{
-			set<pair<uint, int> >::iterator I = interiorSingularities.begin(); 
+			set<pair<uint, int> >::iterator I = interiorSingularities.begin();
 			while (I->first != Image) ++I;
 			list<long> T(1,I->first);
 			O.singularities.push_back(singularity(I->second,T,true));
@@ -907,7 +907,7 @@ void graph::FindSingularities()
 			while (image.front() == -image.back())
 			{
 				image.erase(image.begin());
-				list<long>::iterator I = image.end(); 
+				list<long>::iterator I = image.end();
 				--I;
 				image.erase(I);
 			}
@@ -926,7 +926,7 @@ void graph::FindSingularities()
 
 
 		singularities.push_back(O);
-		
+
 		finished = false;
 		while (!finished)
 		{
@@ -1132,7 +1132,7 @@ bool graph::SingleVertexEmbeddingTighten(uint Index)
 		else
 		{
 
-			if (!Edges[Index].EI.Path.empty() && Edges[Index].EI.Path.back() == Majority) 
+			if (!Edges[Index].EI.Path.empty() && Edges[Index].EI.Path.back() == Majority)
 			{
 				std::list<int>::iterator I = Edges[Index].EI.Path.end();
 				Edges[Index].EI.Path.erase(--I);

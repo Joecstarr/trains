@@ -3,7 +3,7 @@
 
 #endif
 
-#include "trains/braid.h"
+#include "braid.h"
 
 namespace trains {
 

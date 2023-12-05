@@ -3,7 +3,7 @@
 
 #endif
 
-#include "trains/edgevert.h"
+#include "edgevert.h"
 
 namespace trains {
 
@@ -17,20 +17,20 @@ edgelist::~edgelist() {if (next) next->edgelist::~edgelist(); delete [] p;}
 long edgelist::TopIndex() {return MaxAssigned+long(origin);}
 
 edge& edgelist::operator [](uint i)
-{                                                                                    
-	return Element(i-origin);                                                       
+{
+	return Element(i-origin);
 }
 
 edge& edgelist::Element(uint i)
 {
-	if (i > MAXARRAYLENGTH) THROW("Array Index Out of Bounds", 1); 
+	if (i > MAXARRAYLENGTH) THROW("Array Index Out of Bounds", 1);
 	if (long(i) >= MaxAssigned) MaxAssigned = long(i);
-	if (i<size) return p[i];                                                           
+	if (i<size) return p[i];
 	if (next) return next->Element(i-size);
 	uint growby = (delta > i-size+1) ? delta : i-size+1;
 	next = new edgelist(growby, delta);
 	if (!next) THROW("Out of Memory", 1);
-	return next->Element(i-size);                                                          
+	return next->Element(i-size);
 }
 
 uint edgelist::GetSize()
@@ -40,72 +40,72 @@ uint edgelist::GetSize()
 }
 
 void edgelist::Flush()
-{                                                          
+{
 	if (next)
 	{
 		next->Flush();
-		next->edgelist::~edgelist();                                     
+		next->edgelist::~edgelist();
 	}
-	next = NULL;                                                  
+	next = NULL;
 	MaxAssigned = -1;
-}                                                                  
+}
 
 edgelist::edgelist(edgelist& A) : p(new edge[A.GetSize()]),
 next (NULL), size(A.GetSize()), delta(A.delta), origin(A.origin), MaxAssigned(A.MaxAssigned)
 {
 	for (uint i=0; long(i)<=A.MaxAssigned; i++) Element(i)=A.Element(i);
-}                                                   
+}
 
-edgelist& edgelist::operator=(edgelist& A)                        
+edgelist& edgelist::operator=(edgelist& A)
 {
-	if (this == &A) return *this;                        
+	if (this == &A) return *this;
 	Flush();
-	MaxAssigned = -1;                                      
+	MaxAssigned = -1;
 	for (int i=0; i<=A.MaxAssigned; i++) Element(i) = A.Element(i);
 	return *this;
 }
 
 
-long edgelist::Find(edge& Value)                                               
+long edgelist::Find(edge& Value)
 {
-	for (int i=0; i<=MaxAssigned; i++) if (Element(i) == Value) return (i+origin);  
+	for (int i=0; i<=MaxAssigned; i++) if (Element(i) == Value) return (i+origin);
 	return -1;
-}                                                                                    
+}
 
 void edgelist::_Remove(uint i, uint d)
 {
-	if (long(i+d) > MaxAssigned) THROW("Trying to remove non-existent elements",1);             
+	if (long(i+d) > MaxAssigned) THROW("Trying to remove non-existent elements",1);
 	for (uint j=i+d+1; long(j)<=MaxAssigned; j++) Element(j-d-1)=Element(j);
-	MaxAssigned -= (d+1);                                                                   
+	MaxAssigned -= (d+1);
 }
 
 void edgelist::Remove(uint i, uint d)
-{                                                 
+{
 	_Remove(i-origin, d);
 }
 
-void edgelist::Append(edgelist& A)                            
+void edgelist::Append(edgelist& A)
 {
-	for (uint i=0; long(i)<=A.MaxAssigned; i++)                
+	for (uint i=0; long(i)<=A.MaxAssigned; i++)
 		if (MaxAssigned == -1) Element(0) = A.Element(i);
-		else Element(uint(MaxAssigned+1)) = A.Element(i);   
+		else Element(uint(MaxAssigned+1)) = A.Element(i);
 }
 
 void edgelist::Prepend(edgelist& A)
 {
 	long j = A.MaxAssigned;
-	if (j==-1) return; 
+	if (j==-1) return;
 	for (long i=MaxAssigned; i>=0; i--)
-		Element(uint(i+j+1)) = Element(uint(i));  
+		Element(uint(i+j+1)) = Element(uint(i));
 	for (long i=0; i<=j; i++) Element(uint(i)) = A.Element(uint(i));
-}                                                                 
+}
 
 
 
 void edgelist::_Split(uint i, edgelist& A)
-{                                                                                           
+{
 	if (long(i)>MaxAssigned) THROW("Trying to split after end of array",1);
-	A.Flush();                               
+	A.Flush();
 	uint k=0;
 	for (uint j=i+1; long(j)<=MaxAssigned; j++) A.Element(k++) = Element(j);
 	MaxAssigned = long(i);
@@ -113,30 +113,30 @@ void edgelist::_Split(uint i, edgelist& A)
 
 
 void edgelist::Split(uint i, edgelist& A)
-{                                                                          
+{
 	_Split(i-origin, A);
 }
 
 void edgelist::Print(ostream& Out)
 {
-	for (uint i=0; long(i)<=MaxAssigned; i++) Out << Element(i) << " ";                 
+	for (uint i=0; long(i)<=MaxAssigned; i++) Out << Element(i) << " ";
 	Out << '\n';
-}   
+}
 
 
 
 void edgelist::Rotate(long Angle)
-{                                                                                           
+{
 	if (MaxAssigned <= 0) return;
-	edgelist Temp = *this;                                   
+	edgelist Temp = *this;
 	long Modulus = MaxAssigned+1;
-	for (long i=0; i<=MaxAssigned; i++)                    
+	for (long i=0; i<=MaxAssigned; i++)
 	{
 		long j= (i+Angle) % Modulus;
 		if (j<0) j+=Modulus;
-		Element(uint(i))=Temp.Element(uint(j));                 
+		Element(uint(i))=Temp.Element(uint(j));
 	}
-}  
+}
 
 
 
@@ -196,7 +196,7 @@ edge& edgeiterator::operator++()
 
 bool edgeiterator::AtOrigin()
 {
-	return (Index == 0);                                                          
+	return (Index == 0);
 }
 
 void edgeiterator::Reset()
@@ -355,11 +355,11 @@ bool vertexlist::Add(vertex Value)
 	if (Find(Value) != -1) return false;
 	Element(uint(MaxAssigned+1)) = Value;
 	return true;
-}                                                                                     
+}
 
 void vertexlist::SureAdd(vertex Value)
 {
-	Element(uint(MaxAssigned+1)) = Value;                                                        
+	Element(uint(MaxAssigned+1)) = Value;
 }
 
 uint vertexlist::AgreesTo(vertexlist& A)
@@ -374,15 +374,15 @@ vertexiterator::vertexiterator(vertexlist& A) : Index(0), Array(&A) {};
 
 vertex& vertexiterator::Now() {return Array->Element(Index);}
 
-vertex& vertexiterator::operator++(int)                                                         
+vertex& vertexiterator::operator++(int)
 {
-	if (long(Index) < Array->MaxAssigned) return(Array->Element(Index++));                        
+	if (long(Index) < Array->MaxAssigned) return(Array->Element(Index++));
 	Index = 0;
 	return (Array->Element(uint(Array->MaxAssigned)));
 }
 
 vertex& vertexiterator::operator++()
-{                                                                        
+{
 	if (long(Index) < Array->MaxAssigned) Index++;
 	else Index = 0;
 	return (Array->Element(Index));

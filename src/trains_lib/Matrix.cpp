@@ -3,7 +3,7 @@
 
 #endif
 
-#include "trains/Matrix.h"
+#include "Matrix.h"
 
 namespace trains {
 

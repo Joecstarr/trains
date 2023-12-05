@@ -6,14 +6,14 @@
 #include <math.h>
 #include <fstream>
 #include <string>
-#include "trains/newarray.h"
-#include "trains/Matrix.h"
-#include "trains/braid.h"
-#include "trains/graph.h"
-#include "trains/hshoe.h"
-#include "trains/help.h"
-#include "trains/Batch.h"
-#include "trains/ttt.h"
+#include "newarray.h"
+#include "Matrix.h"
+#include "braid.h"
+#include "graph.h"
+#include "hshoe.h"
+#include "help.h"
+#include "Batch.h"
+#include "ttt.h"
 
 namespace trains {
 
@@ -24,8 +24,8 @@ static const char* ThurstonType[] = {"Pseudo-Anosov", "Finite Order", "Reducible
 
 static const char* Commands[] = {"load", "save", "print", "train", "exit", "relabel", "input",
 	"braid", "quit", "q", "dir", "ls", "step", "growth", "printto", "horseshoe", "hs",
-	"tol", "precision", "reduction", "check", "help", "tolerance", "prec", "gates", "run", 
-    "charpoly", "cp", "loops", "trains", "loop", "addloop", "add", "factor", "shortprint", 
+	"tol", "precision", "reduction", "check", "help", "tolerance", "prec", "gates", "run",
+    "charpoly", "cp", "loops", "trains", "loop", "addloop", "add", "factor", "shortprint",
     "short", "shortprintto", "shortto", "embedding", "transmat", "tm", "ttt", "shortsing", "longsing", "sings"};
 const uint NumberOfCommands = 45;
 
@@ -361,7 +361,7 @@ int main(int argc, char* argv[])
 				if (BatchProcess(Filename, Precision)) cout << "\nRun was successful\n";
 				Assigned = false;
 				break;
-			#ifdef __CHARPOLY	
+			#ifdef __CHARPOLY
 			case 26: case 27: //charpoly
                 if (!Assigned)
                 {
@@ -369,8 +369,8 @@ int main(int argc, char* argv[])
                     break;
                 }
                 cout << "Characteristic polynomial: " << G.CharacteristicPolynomial(G.Factor) << '\n';
-                break;   
-            #endif 
+                break;
+            #endif
 			case 28: case 30: //loops
 				if (!Assigned)
 				{
@@ -379,7 +379,7 @@ int main(int argc, char* argv[])
 				}
 				G.PrintLoops();
 				break;
-				
+
 			case 31: case 32: //addloop
 			    if (!Assigned)
 			    {
@@ -394,26 +394,26 @@ int main(int argc, char* argv[])
                     {
                         cin >> entry;
                         if (entry != 0) Loop.SureAdd(entry);
-                    }  while (entry != 0);      
+                    }  while (entry != 0);
                     cout << "Enter loop description: ";
                     char line[256];
                     cin.ignore();
                     cin.getline(line,256);
                     G.AddLoop(Loop, std::string(line));
-                }    
+                }
                 break;
-                
+
             case 33: //factor
                G.Factor = !G.Factor;
                if (G.Factor) cout << "Factorisation on\n";
                else cout << "Factorisation off\n";
                break;
-               
+
 			case 34: case 35:   //Shortprint
 				if (!Assigned)	cout << "Graph not assigned yet\n";
 				else G.Print(std::cout, false);
 				break;
-				
+
 			case 36: case 37:  //Shortprintto
 				if (!Assigned)
 				{
@@ -431,7 +431,7 @@ int main(int argc, char* argv[])
 				cout << "Printed to " << Filename << '\n';
 				File.close();
 				break;
-				
+
 			case 38: //embedding
 			   G.DesireEmbedding = !G.DesireEmbedding;
 			   if (G.DesireEmbedding) cout << "Embedding will be tracked after a new graph is loaded\n";
@@ -439,9 +439,9 @@ int main(int argc, char* argv[])
 			   {
 			       cout << "Embedding tracking disabled\n";
 			       G.Embedding = false;
-			   }    
+			   }
 			   break;
-			   
+
             case 39: case 40: //transmat
                if (!Assigned)
 				{
@@ -451,7 +451,7 @@ int main(int argc, char* argv[])
 				else
 				{
 				   matrixformat Format = raw;
-				   if (i>1) 
+				   if (i>1)
 				   {
 				       string option(Input[1]);
 				       if (option == "maple") Format = maple;
@@ -460,14 +460,14 @@ int main(int argc, char* argv[])
 				       {
 				           cout << "Unrecognised matrix format\n";
 				           break;
-				       }    
-				   } 
+				       }
+				   }
                    vector<string> Result = G.TransitionMatrix(Format);
                    cout << "Transition matrix:" << endl;
-                   for (vector<string>::size_type i=0; i<Result.size(); ++i) cout << Result[i] << endl;   
-                }        
+                   for (vector<string>::size_type i=0; i<Result.size(); ++i) cout << Result[i] << endl;
+                }
                 break;
-                
+
             case 41: //ttt
                if (!Assigned)
                {
@@ -476,11 +476,11 @@ int main(int argc, char* argv[])
                }
                if (G.Type != pA) cout << "Must run algorithm and have pA type\n";
                else
-               { 
+               {
                   TTT t(G);
                   cout << t << '\n';
-               }    
-               break; 
+               }
+               break;
 
 			case 42: //shortsing
 				ShortSing = true;

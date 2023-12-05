@@ -5,7 +5,7 @@
 
 #endif
 
-#include "trains/graph.h"
+#include "graph.h"
 #include <fstream>
 #include <sstream>
 #include <map>
@@ -226,7 +226,7 @@ void graph::BoundaryPeripheralSet(braid& B)
 						++J; ++J;
 						continue;
 					}
-					if (*J == -absgen) 
+					if (*J == -absgen)
 					{
 						*J = -(absgen+1);
 						continue;
@@ -259,7 +259,7 @@ void graph::BoundaryPeripheralSet(braid& B)
 	int nextVertexNumber = 2;
 	for (int i=1; i<n; ++i) if (!nonPeripheral[i]) vertexNumbers[i] = nextVertexNumber++;
 
-	//Set up graph 
+	//Set up graph
 	Flush();
 	Punctures = n + 1 - numberNonPeripheral;
 	NextEdgeLabel = 2*n + 1 - numberNonPeripheral;
@@ -273,7 +273,7 @@ void graph::BoundaryPeripheralSet(braid& B)
 	Now.Label = 1;
 	Now.Image = 1;
 	Now.Region = boundayVertexRegion;
-	Now.Edges.SureAdd(-n); 
+	Now.Edges.SureAdd(-n);
 	for (int i=1; i<n; ++i)
 	{
 		Now.Edges.SureAdd(i);
@@ -303,7 +303,7 @@ void graph::BoundaryPeripheralSet(braid& B)
 		Now.Start = i + 1 - n;
 		Now.End = i + 1 - n;
 		if (i == n) Now.Image[1] = i;
-		else 
+		else
 		{
 			int stringNumber = -Vertices[i + 1 - n].Edges[1];
 			int imageStringNumber = punctureImages[stringNumber];
@@ -392,7 +392,7 @@ void graph::BoundaryPeripheralSet(braid& B)
 	}
 	vector<long> v;
 	for (int i = 1-n; i <= -1; ++i) v.insert(v.end(), replacements[i].begin(), replacements[i].end());
-	v.push_back(-n); 
+	v.push_back(-n);
 	replacements[n] = v;
 	vector<long> u;
 	for (vector<long>::reverse_iterator I = v.rbegin(); I != v.rend(); ++I) u.push_back(-*I);
@@ -674,7 +674,7 @@ void graph::PrintLoops(ostream& Out)
 	for (vector<int>::size_type i=0; i<loops.size(); ++i) {
 		Out << looplabels[i] << ": ";
 		loops[i].Print(Out);
-	}    
+	}
 }
 
 
@@ -809,8 +809,8 @@ void graph::ReLabel()
 			long Find = (Now[j]>0) ? Now[j] : -Now[j];
 			long k=1; while (Find != OldLabel[k]) k++;
 			Now[j] = (Now[j]>0) ? k : -k;
-		}    
-	}    
+		}
+	}
 	//Change edges round vertices
 	for (i=1; i<=VNo; i++)
 	{
@@ -922,7 +922,7 @@ void graph::Load(istream& In)
 	char c = static_cast<char>(In.peek());
 	if (c != 'V')
 	{
-		if (!UtilityFlag) 
+		if (!UtilityFlag)
 #ifndef VS2005
 			Report("Old format file.");
 #else
@@ -939,7 +939,7 @@ void graph::Load(istream& In)
 	Flush();
 	uint NumberOfEdges, NumberOfVertices;
 	In >> Punctures >> NumberOfEdges >> NumberOfVertices >> Embedding >> NextVertexLabel >> NextEdgeLabel;
-	if (Embedding && !DesireEmbedding) 
+	if (Embedding && !DesireEmbedding)
 #ifndef VS2005
 		Report("Embedding information is present, and will be discarded");
 #else

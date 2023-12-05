@@ -3,9 +3,9 @@
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
-#include "trains/General.h"
+#include "General.h"
 
-#include "trains/help.h"
+#include "help.h"
 
 namespace trains {
 
@@ -15,7 +15,7 @@ static const char* Topics[] = {"overview", "implementation", "load", "save", "pr
 	"train", "quit", "relabel", "input",
 	"braid", "ls", "step", "growth", "printto", "horseshoe",
 	"tolerance", "precision", "reduction", "check", "help",
-	"q", "exit", "dir", "hs", "tol", "prec", "gates", "run", 
+	"q", "exit", "dir", "hs", "tol", "prec", "gates", "run",
     "charpoly", "cp", "loops", "addloop", "add", "factor",
     "shortprint", "short", "shortprintto", "shortto", "embedding", "transmat", "tm", "ttt"};
 const uint NumberOfTopics = 42;
@@ -97,7 +97,7 @@ void Help(char* Topic)
 			break;
 
 		case 1: //Implementation
-			
+
 			break;
 
 		case 2: //Load
@@ -527,7 +527,7 @@ void Help(char* Topic)
 			cout << "To use this command, you must link with the NTL library, and put\n";
 			cout << "#define __CHARPOLY in the file General.h\n";
 			break;
-			
+
         case 30: //loops
            cout << "\n\nLOOPS\n";
            cout << "=====\n\n";
@@ -538,7 +538,7 @@ void Help(char* Topic)
            cout << "adjacent pairs of punctures. Also included are any loops which have been\n";
            cout << "entered using the ADDLOOP command\n";
            break;
-           
+
         case 31: case 32: //addloop
            cout << "\n\nADDLOOP\t\tSynonym: add\n";
            cout << "=======\n\n";
@@ -549,7 +549,7 @@ void Help(char* Topic)
            cout << "(which can be any string). At any point in the algorithm you can see the\n";
            cout << "edge-path currently representing the loop using the LOOPS command.\n";
            break;
-        
+
         case 33: //factor
            cout << "\n\nFACTOR\n";
            cout << "======\n\n";
@@ -557,7 +557,7 @@ void Help(char* Topic)
            cout << "Toggles a flag determining whether or not the characteristic polynomial\n";
            cout << "is factorised before being displayed.\n";
            break;
-           
+
         case 34: case 35: //shortprint
            cout << "\n\nSHORTPRINT\t\tSynonym: short\n";
            cout << "==========\n\n";
@@ -565,7 +565,7 @@ void Help(char* Topic)
            cout << "Does the same as PRINT, but omits edge images. This can be useful when\n";
            cout << "these images are huge.\n";
            break;
-           
+
         case 36: case 37: //shortprintto
            cout << "\n\nSHORTPRINTTO\t\tSynonym: shortto\n";
            cout << "============\n\n";
@@ -573,7 +573,7 @@ void Help(char* Topic)
            cout << "Does the same as PRINTTO, but omits edge images. This can be useful when\n";
            cout << "these images are huge.\n";
            break;
-           
+
         case 38: //embedding
            cout << "\n\nEMBEDDING\n";
            cout << "=========\n\n";
@@ -583,7 +583,7 @@ void Help(char* Topic)
            cout << "'punctured disk', since tracking is only available for graph maps entered\n";
            cout << "as braids or collections of horseshoe orbits.\n";
            break;
-           
+
         case 39: case 40: //transmat
            cout << "\n\nTRANSMAT\t\tSynonym: tm\n";
            cout << "========\n\n";
@@ -591,7 +591,7 @@ void Help(char* Topic)
            cout << "Displays the transition matrix of the main edges of the graph. Output can be\n";
            cout << "in one of three formats: raw, maple, or latex. The default is raw.\n";
            break;
-           
+
         case 41: //ttt
            cout << "\n\nTTT\n";
            cout << "===\n\n";
