@@ -35,6 +35,4 @@ jobs:
       with:
           name: linux_artifacts
           path: |
-            build/**/*.exe
-            build/**/*.a
-            build/**/*.lib
+            build/**/frontend.*
