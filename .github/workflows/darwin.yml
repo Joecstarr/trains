@@ -36,5 +36,5 @@ jobs:
       with:
           name: osx_artifacts
           path: |
-            **/*.*
+            build/src/frontend/frontend
 

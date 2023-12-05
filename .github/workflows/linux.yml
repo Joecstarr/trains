@@ -35,4 +35,5 @@ jobs:
       with:
           name: linux_artifacts
           path: |
-            build/**/frontend.*
+            build/src/frontend/frontend
+
